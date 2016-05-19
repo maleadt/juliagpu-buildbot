@@ -83,9 +83,8 @@ class SlackStatusPush(StatusReceiverMultiService):
             status = "Failure"
             color = "failure"
 
-        message = "New Build for {project} ({revision})\nStatus: *{status}*\nBuild details: {url}".format(
-            project=project,
-            revision=revision,
+        message = "New Build for {builder_name}\nStatus: *{status}*\nBuild details: {url}".format(
+            builder_name=builder_name,
             status=status,
             url=build_url
         )
