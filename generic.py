@@ -42,7 +42,6 @@ class _DataReader(pb.Referenceable):
         """
         self.i = len(self.data)
 
-
 class FileCreate(_TransferBuildStep):
 
     name = 'create'

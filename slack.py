@@ -3,7 +3,6 @@ from buildbot.status.builder import Results, SUCCESS
 import requests
 import json
 
-
 class SlackStatusPush(StatusReceiverMultiService):
     """
     Sends messages to a Slack.io channel when each build finishes with a handy
@@ -70,11 +69,11 @@ class SlackStatusPush(StatusReceiverMultiService):
                 self.localhost_replace))
 
         source_stamps = build.getSourceStamps()
-        branch_names = ', '.join([source_stamp.branch for source_stamp in source_stamps])
-        repositories = ', '.join([source_stamp.repository for source_stamp in source_stamps])
+        branch_names = ', '.join(filter(None, [source_stamp.branch for source_stamp in source_stamps]))
+        repositories = ', '.join(filter(None, [source_stamp.repository for source_stamp in source_stamps]))
         responsible_users = ', '.join(build.getResponsibleUsers())
-        revision = ', '.join([source_stamp.revision for source_stamp in source_stamps])
-        project = ', '.join([source_stamp.project for source_stamp in source_stamps])
+        revision = ', '.join(filter(None, [source_stamp.revision for source_stamp in source_stamps]))
+        project = ', '.join(filter(None, [source_stamp.project for source_stamp in source_stamps]))
 
         if result == SUCCESS:
             status = "Success"
