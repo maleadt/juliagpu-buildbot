@@ -69,6 +69,8 @@ class FileCreate(_TransferBuildStep):
         # we are currently in the buildmaster's basedir, so any non-absolute
         # paths will be interpreted relative to that
         data = self.data
+        if isinstance(data, dict):          # HACK to render properties -- needs MakeUserInterpolate subclassing
+            data = strMakeUser(data)        # https://stackoverflow.com/questions/28634959/performing-string-transformations-on-buildbot-build-properties
         slavedest = self.slavedest
         log.msg("FileCreate started, creating slave %r" %
                 (slavedest))
@@ -97,7 +99,7 @@ class FileCreate(_TransferBuildStep):
 def strMakeUser(config):
     lines = []
     for k,v in config.items():
-        lines.append("%s=%s" % (k, v))
+        lines.append("override %s=%s" % (k, v))
     return "\n".join(lines)
 
 # TODO: merging PATH env var shouldn't use space as separator
