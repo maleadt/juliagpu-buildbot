@@ -11,7 +11,7 @@ class SlackStatusPush(StatusReceiverMultiService):
 
     def __init__(self, weburl,
                  localhost_replace=False, username=None,
-                 icon=None, notify_on_success=True, notify_on_failure=True,
+                 icon=None, notify_on_success=False, notify_on_failure=True,
                  **kwargs):
         """
         Creates a SlackStatusPush status service.
