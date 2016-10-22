@@ -3,7 +3,7 @@ import os
 from twisted.application import service
 from buildbot.master import BuildMaster
 
-basedir = '/var/lib/buildbot/masters/julia'
+basedir = '/var/lib/buildbot/masters/juliacpu'
 
 rotateLength = 10000000
 maxRotatedFiles = 10

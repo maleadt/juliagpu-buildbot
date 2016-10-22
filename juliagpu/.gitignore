@@ -1,4 +1,3 @@
-*.pyc
 twistd.log*
 state.sqlite
 passwords.py
