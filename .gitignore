@@ -1,1 +1,10 @@
 *.pyc
+twistd.log*
+state.sqlite
+passwords.py
+Julia*/
+twistd.pid
+http.log
+gitpoller-work
+master.cfg.sample
+
