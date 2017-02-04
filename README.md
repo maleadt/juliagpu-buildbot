@@ -32,3 +32,12 @@ done on Travis now.
 These should optionally allow to check-out certain dependencies from `master` (eg.
 CUDAnative package builder should probably use CUDAdrv and LLVM from master -- but maybe
 also have a tag builder with normal check-outs).
+
+
+GitHub hook
+-----------
+
+* Payload URL: `/change_hook/github` relative to the root
+* Content Type: `application/x-www-form-urlencoded`
+* Secret: same as `passwords.github['webhook']`
+* Events: Push and Pull Request
