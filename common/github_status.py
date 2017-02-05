@@ -12,6 +12,13 @@
 # Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # Copyright Buildbot Team Members
+#
+#
+# Diff to GitHubStatus from BuildBot 0.8.12:
+# - include a status context: this renders nicely in the WebUI as the name of the build, but
+#   more importantly prevents multiple builds from overriding eachother
+# - partial codebase support: pick the `revision` property, which is properly set in the
+#   case of a single-repository codebase build (see the inline TODO)
 from __future__ import absolute_import
 
 from datetime import datetime
@@ -31,6 +38,8 @@ from buildbot.status.base import StatusReceiverMultiService
 from buildbot.status.builder import FAILURE
 from buildbot.status.builder import SUCCESS
 from buildbot.util import human_readable_delta
+
+import pprint
 
 _STATE_MAP = {
     SUCCESS: 'success',
@@ -58,7 +67,7 @@ class GitHubStatus(StatusReceiverMultiService):
 
     implements(IStatusReceiver)
 
-    def __init__(self, token, repoOwner, repoName, sha=None,
+    def __init__(self, token, repoOwner, repoName,
                  startDescription=None, endDescription=None,
                  baseURL=None, context=None):
         """
@@ -69,11 +78,10 @@ class GitHubStatus(StatusReceiverMultiService):
 
         StatusReceiverMultiService.__init__(self)
 
-        self._sha = sha or Interpolate("%(src::revision)s") or \
-            Property('got_revision')
+        self._revision = Property('revision')
         self._repoOwner = repoOwner
         self._repoName = repoName
-        self._context = context or Interpolate("%(prop:buildername)s")
+        self._context = context or Property('buildername')
         self._startDescription = startDescription or "Build started."
         self._endDescription = endDescription or "Build done."
 
@@ -169,15 +177,35 @@ class GitHubStatus(StatusReceiverMultiService):
         """
         Return a dictionary with GitHub related properties from `build`.
         """
-        repoOwner, repoName, sha, context = yield defer.gatherResults([
+        repoOwner, repoName, revision, context = yield defer.gatherResults([
             build.render(self._repoOwner),
             build.render(self._repoName),
-            build.render(self._sha),
+            build.render(self._revision),
             build.render(self._context),
         ])
 
         if not repoOwner or not repoName:
             defer.returnValue({})
+
+        # FIXME: this can't handle multi-codebase repositories. In that case, the
+        # `got_revision` property is a dictionary, but it is only populated after the Git
+        # step. That means we never get to publish the `Build started` status...
+        #
+        # For now, we're using the `revision` property, which is populated by the build but
+        # is None in a multi-codebase build.
+
+        # log.msg("Githubstatus: incoming revision %s" % pprint.pformat(revision))
+        if isinstance(revision, dict):
+            # # dealing with codebases here
+            # if len(revision.keys()) == 1:
+            #     sha = revision.values()[0]
+            # else:
+            #     # TODO: codebase selector argument to the status object?
+            #     log.msg("GitHubStatus: sourcestamp contains multiple codebases, don't know which one to pick")
+            #     defer.returnValue({})
+            sha = None
+        else:
+            sha = revision
 
         if not sha:
             log.msg('GitHubStatus: No revision found.')
