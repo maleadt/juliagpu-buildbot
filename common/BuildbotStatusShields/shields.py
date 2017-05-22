@@ -125,6 +125,11 @@ class ShieldStatusResource(resource.Resource):
                 'image': None,
                 'content_type': mimetypes[filetype]}
 
+        badge_name = request.args.get('badge', [None])[0]
+
+        if badge_name is not None:
+            self.left_text = badge_name
+
         builder_name= request.args.get('builder', [None])[0]
 
         svgdata = self.makesvg("Unknown", left_text="Image Error")
@@ -146,7 +151,7 @@ class ShieldStatusResource(resource.Resource):
 				if build is not None:
 					result = build.getResults()
 					svgdata = self.makesvg(results.Results[result],
-							   results.Results[result], left_text=self.left_text + ": " + branch)
+							   results.Results[result], left_text=self.left_text)
 				else:
 					svgdata = self.makesvg("No builds", left_text="Image Error")
         else:
