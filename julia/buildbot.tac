@@ -1,11 +1,11 @@
 import os
 
-# disable excessive deprecation warnings
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-
 from twisted.application import service
 from buildbot.master import BuildMaster
+
+# disable excessive deprecation warnings
+import warnings
+warnings.simplefilter("ignore", category=DeprecationWarning)
 
 basedir = '/var/lib/buildbot/masters/julia'
 rotateLength = 10000000
