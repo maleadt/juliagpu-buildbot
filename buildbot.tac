@@ -3,11 +3,7 @@ import os
 from twisted.application import service
 from buildbot.master import BuildMaster
 
-# disable excessive deprecation warnings
-import warnings
-warnings.simplefilter("ignore", category=DeprecationWarning)
-
-basedir = '/var/lib/buildbot/masters/julia'
+basedir = '/opt/buildbot/masters/julia'
 rotateLength = 10000000
 maxRotatedFiles = 10
 configfile = 'master.cfg'
@@ -17,7 +13,7 @@ umask = None
 
 # if this is a relocatable tac file, get the directory containing the TAC
 if basedir == '.':
-    import os.path
+    import os
     basedir = os.path.abspath(os.path.dirname(__file__))
 
 # note: this line is matched against to check that this is a buildmaster

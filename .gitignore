@@ -1,7 +1,7 @@
 *.pyc
 twistd.log*
 state.sqlite
-passwords.py
+private.py
 Julia*/
 twistd.pid
 http.log
