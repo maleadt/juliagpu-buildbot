@@ -1,5 +1,5 @@
-# Passwords of buildslaves
-buildslaves = {
+# Passwords of workers
+workers = {
     'your.slave.hostname':  '...'
 }
 
@@ -13,9 +13,9 @@ codecov = {
 github = {
     # incoming webhook secret
     'webhook':              '...',
-    # token for integrations
-    'token':                '...'
+    # oath client
+    'client_id':            '...',
+    'client_secret':        '...',
+    # API token
+    'token':                '...',
 }
-
-# Slack token for status messages (None to disable)
-slackhook = '...'

@@ -30,7 +30,7 @@ class MakeUser(object):
         self.config = config
 
     def getRenderingFor(self, props):
-        d = props.render(self.settings)
+        d = props.render(self.config)
 
         @d.addCallback
         def flat(config):
