@@ -1,6 +1,6 @@
 *.pyc
 twistd.log*
-state.sqlite
+state.sqlite*
 private.py
 Julia*/
 twistd.pid
