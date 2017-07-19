@@ -14,3 +14,7 @@ def merge(*dicts):
             merged[k] = " ".join(values)
 
     return merged
+
+# remove non-alnum chars for Buildbot identifier generation
+def buildbot_id(str):
+    return ''.join(ch for ch in str if ch.isalnum())
