@@ -4,3 +4,7 @@ MAINTAINER tim.besard@gmail.com
 RUN \
     pip install txrequests && \
     rm -r /root/.cache
+
+RUN ln -s /config/master.cfg /var/lib/buildbot/
+
+VOLUME ["/config", "/data", "/run/secrets"]

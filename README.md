@@ -20,6 +20,10 @@ First, you need to provide multiple secrets:
 - `secrets/github.json`: JSON dict defining `client_id`, `client_secret`,
   `api_token` and `webhook`
 
+Then, set the `MODE` environment variable to either `dev` or `prod`.
+
+Finally, launch the set-up using `docker-compose up`.
+
 
 ## How to: use
 

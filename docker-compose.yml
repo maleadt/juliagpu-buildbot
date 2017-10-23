@@ -5,15 +5,14 @@ services:
     build:
         context: ./master
     environment:
+        MODE: dev
         BUILDMASTER_PORT: 9989
         WEB_PORT: 8010
         WEB_URL: http://ci.maleadt.net:8010/
-        PYTHONPATH: /usr/local/lib/python
     env_file:
       - worker.env
     volumes:
-      - ./master/master.cfg:/var/lib/buildbot/master.cfg
-      - ./master/lib:/usr/local/lib/python
+      - ./master:/config
       - ./secrets:/run/secrets
       - /tmp/master:/data
     ports:
@@ -28,5 +27,6 @@ services:
       - worker.env
     volumes:
       - /tmp/worker:/data
+      - /tmp/cache:/cache
     links:
       - master
