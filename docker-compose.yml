@@ -12,7 +12,7 @@ services:
     env_file:
       - worker.env
     volumes:
-      - ./master:/config
+      - ./config:/config
       - ./secrets:/run/secrets
       - /tmp/master:/data
     ports:

@@ -1,10 +1,12 @@
-FROM       buildbot/buildbot-master:v0.9.13
+FROM       python:3-jessie
 MAINTAINER tim.besard@gmail.com
 
-RUN \
-    pip install txrequests && \
-    rm -r /root/.cache
+RUN pip --no-cache-dir install buildbot[bundle]==0.9.13 \
+                               txrequests==0.9.5
 
-RUN ln -s /config/master.cfg /var/lib/buildbot/
+WORKDIR "/var/lib/buildbot"
+COPY . .
 
 VOLUME ["/config", "/data", "/run/secrets"]
+
+CMD ["./start.sh"]

@@ -1,7 +1,5 @@
-FROM       buildbot/buildbot-worker:v0.9.13
+FROM       python:3-jessie
 MAINTAINER tim.besard@gmail.com
-
-USER root
 
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends \
@@ -10,7 +8,7 @@ RUN apt-get update && \
                     # Julia
                     cmake curl gfortran git m4 python \
                     # master.cfg
-                    clang ccache && \
+                    rsync clang ccache && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -20,7 +18,11 @@ RUN mkdir -p /usr/local/lib/ccache/bin && \
     ln -s /usr/bin/ccache /usr/local/lib/ccache/bin/gfortran
 ENV CCACHE_DIR /cache/ccache
 
-# NOTE: keep in sync with upstream Dockerfile
-USER buildbot
+RUN pip --no-cache-dir install buildbot-worker==0.9.13
+
+WORKDIR "/var/lib/buildbot"
+COPY . .
 
 VOLUME ["/data", "/cache"]
+
+CMD ["twistd", "-ny", "buildbot.tac"]
