@@ -1,4 +1,4 @@
-FROM       buildbot/buildbot-master:v0.9.12.post1
+FROM       buildbot/buildbot-master:v0.9.13
 MAINTAINER tim.besard@gmail.com
 
 RUN \
