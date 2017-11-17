@@ -1,4 +1,4 @@
-FROM       python:3-jessie
+FROM       python:3-stretch
 MAINTAINER tim.besard@gmail.com
 
 RUN apt-get update && \

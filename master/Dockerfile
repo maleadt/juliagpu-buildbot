@@ -1,4 +1,4 @@
-FROM       python:3-jessie
+FROM       python:3-stretch
 MAINTAINER tim.besard@gmail.com
 
 RUN pip --no-cache-dir install buildbot[bundle]==0.9.13 \
