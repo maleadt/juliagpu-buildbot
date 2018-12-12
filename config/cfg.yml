@@ -1,0 +1,16 @@
+env: {}
+not_important_files: []
+projects:
+-   branches: []
+    github_token: ...
+    name: LLVM
+    reporter_context: Test
+    repository: https://github.com/maleadt/LLVM.jl.git
+    stages: []
+    tags:
+    - julia
+    vcs_type: github
+stages: []
+workers:
+-   name: localworker
+    type: LocalWorker

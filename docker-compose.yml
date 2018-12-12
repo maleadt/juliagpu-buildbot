@@ -4,34 +4,10 @@ services:
   master:
     build:
         context: ./master
-    environment:
-        MODE: dev
-        BUILDMASTER_PORT: 9989
-        WEB_PORT: "tcp:port=8010"
-        WEB_URL: http://ci.maleadt.net:8010/
-    env_file:
-      - worker.env
     volumes:
-      - ./config:/config:ro
-      - ./secrets:/run/secrets:ro
-      - master_data:/data
+      - ./config:/config
     ports:
       - "8010:8010"
-
-  worker:
-    build:
-        context: ./worker
-    environment:
-      BUILDMASTER: master
-    env_file:
-      - worker.env
-    volumes:
-      - worker_data:/data
-      - worker_cache:/cache
-    links:
-      - master
-
-volumes:
-    master_data:
-    worker_data:
-    worker_cache:
+      - "9989:9989"
+    expose:
+      - 9989
