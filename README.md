@@ -1,6 +1,8 @@
 JuliaGPU buildbot
 =================
 
+**DEPRECATED**: we now use [GitLab CI/CD](https://github.com/JuliaGPU/gitlab-ci).
+
 This repository contains build recipes for a non-official Julia buildbot,
 focused on testing packages which require an active GPU (which Travis and
 the like don't support).
